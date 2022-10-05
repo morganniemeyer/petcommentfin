@@ -2,10 +2,9 @@ export function renderPet(pet) {
     const li = document.createElement('li');
 
     // Part A: add an anchor link tag
+    const a = document.createElement('a');
     //      - set the link to be like `/pet/?id=34`, but use the actual pet id
     //      - adjust the content to be in the anchor link,
-    //        and the anchor link is appended to the li
-    const a = document.createElement('a');
     a.href = `/pet/?id=${pet.id}`;
 
     const img = document.createElement('img');
@@ -17,7 +16,9 @@ export function renderPet(pet) {
     const p = document.createElement('p');
     p.textContent = pet.bio;
 
-    li.append(a, img, h2, p);
+    //        and the anchor link is appended to the li
+    a.append(img, h2, p);
+    li.append(a);
 
     return li;
 }
