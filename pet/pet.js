@@ -2,7 +2,7 @@
 // this will check if we have a user and set signout link if it exists
 import '../auth/user.js';
 // > Part B: import pet fetch
-import { getPet } from '../fetch-utils.js';
+import { getPet, createComment } from '../fetch-utils.js';
 // > Part C: import create comment
 import { renderComment } from '../render-utils.js';
 
@@ -49,11 +49,26 @@ addCommentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // > Part C:
+    const formData = new FormData(addCommentForm);
     //    - create an comment insert object from formdata and the id of the pet
+    const commentInsert = {
+        pet_id: pet.id,
+        text: formData.get('text'),
+    };
     //    - create the comment
+    const response = await createComment(commentInsert);
+    error = response.error;
+    const comment = response.data;
     //    - store and check for an error and display it, otherwise
-    //    - add the new comment (data) to the front of the pet comments using unshift
-    //    - reset the form
+    if (error) {
+        displayError();
+    } else {
+        displayComments();
+        //    - reset the form
+        addCommentForm.reset();
+        //    - add the new comment (data) to the front of the pet comments using unshift
+        pet.comments.unshift(comment);
+    }
 });
 
 /* Display Functions */
