@@ -42,6 +42,7 @@ window.addEventListener('load', async () => {
         //  - otherwise, display pet
         displayPet();
         // > Part C: also call display comments in addition to display pet
+        displayComments();
     }
 });
 
@@ -63,11 +64,11 @@ addCommentForm.addEventListener('submit', async (e) => {
     if (error) {
         displayError();
     } else {
-        displayComments();
         //    - reset the form
         addCommentForm.reset();
         //    - add the new comment (data) to the front of the pet comments using unshift
         pet.comments.unshift(comment);
+        displayComments();
     }
 });
 
@@ -95,6 +96,8 @@ function displayComments() {
     commentList.innerHTML = '';
 
     for (const comment of pet.comments) {
+        const commEl = renderComment(comment);
+        commentList.append(commEl);
         // > Part C: render the comments
     }
 }
